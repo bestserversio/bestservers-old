@@ -21,6 +21,7 @@ class Server extends Model
         'description',
         'url',
         'rules',
+        'website',
         'has_banner',
         'players',
         'max_players',
