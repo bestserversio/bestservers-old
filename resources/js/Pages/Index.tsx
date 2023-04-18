@@ -1,22 +1,20 @@
 import React from 'react';
 
-import HeadInfo from '../Components/head';
+import { type MetaType } from '../Components/Meta';
+import Wrapper from '../Components/Wrapper';
 
-export default function Index({ 
-    test, 
+export default function Index({  
     meta 
+} : {
+    meta: MetaType
 }) {    
     return (
         <>
-            <HeadInfo
-                title={meta.title}
-                description={meta.description}
-                image={meta.image}
-                key_words={meta.key_words}
-                robots={meta.robots}
-                web_type={meta.web_type}
-            />
-            <p>Hello! Test # is {test}</p>
+            <Wrapper
+                meta={meta}
+            >
+                <p>Hello!</p>
+            </Wrapper>
         </>
     );
 }

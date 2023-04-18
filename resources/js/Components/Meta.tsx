@@ -1,14 +1,16 @@
 import { Head } from '@inertiajs/react';
 import React from 'react';
 
-const HeadInfo: React.FC<{
+export type MetaType = {
     title?: string
     description?: string
     robots?: string
     image?: string
     web_type?: string
     key_words?: string
-}> = ({
+}
+
+const MetaInfo: React.FC<MetaType> = ({
     title,
     description,
     robots,
@@ -98,4 +100,4 @@ const HeadInfo: React.FC<{
     );
 }
 
-export default HeadInfo;
+export default MetaInfo;
