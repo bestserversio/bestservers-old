@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+use App\Http\Controllers\ServerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,5 +17,19 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Index');
+    $meta = [
+        'title' => config('meta.defaults.title'),
+        'description' => config('meta.defaults.description'),
+        'image' => config('meta.defaults.image'),
+        'robots' => config('meta.defaults.robots'),
+        'web_type' => config('meta.defaults.web_type'),
+        'key_words' => config('meta.defaults.key_words')
+    ];
+
+    return Inertia::render('Index', [
+        'meta' => $meta
+    ]);
 });
+
+Route::resource('servers', ServerController::class);
+Route::resource('users', UserController::class);
