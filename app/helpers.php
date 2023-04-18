@@ -3,7 +3,7 @@
 
     // Generates meta data and returns as an array.
     if (! function_exists('gen_meta')) {
-        function gen_meta($title=null, $description=null, $robots=null, $image=null, $web_type=null, $key_words=null) {
+        function gen_meta(string $title=null, string $description=null, string $robots=null, string $image=null, string $web_type=null, string $key_words=null) {
             return [
                 'title' => ($title) ? $title : config('meta.defaults.title'),
                 'description' => ($description) ? $description : config('meta.defaults.description'),
