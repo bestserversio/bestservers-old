@@ -24,36 +24,45 @@ const HeadInfo: React.FC<{
         full_url = base_url + window.location.pathname;
     }
 
+    // Image should prepend full URL and also replace any duplicated '/' with it.
+    const full_image = (full_url + image).replace(/(?<=:\/\/.*?)\/\//, '/');
+
     return (
         <Head>
             <link rel="canonical" href={full_url} key="canonical" />
 
             {title && (
-                <>
-                    <title>{title}</title>
-                    <meta property="twitter:title" content={title} key="meta_twitterTitle" />
-                    <meta property="og:title" content={title} key="meta_ogTitle" />
-                </>
+                <title key="meta_title">{title}</title>
             )}
-
+            {title && (
+                <meta property="twitter:title" content={title} key="meta_twitterTitle" />
+            )}
+            {title && (
+                <meta property="og:title" content={title} key="meta_ogTitle" />
+            )}
+                    
             {image && (
-                <>
-                    <link rel="apple-touch-icon" href={image} key="meta_appIcon" />
-                    <meta property="og:image" content={image} key="meta_ogImg" />
-                    <meta property="twitter:image" content={image} key="meta_twitterImg" />
-                </>
+                <link rel="apple-touch-icon" href={full_image} key="meta_appIcon" />
             )}
-
+            {image && (
+                <meta property="og:image" content={full_image} key="meta_ogImg" />
+            )}
+            {image && (
+                <meta property="twitter:image" content={full_image} key="meta_twitterImg" />
+            )}
+                
             {robots && (
                 <meta name="robots" content={robots} key="meta_robots" />
             )}
 
             {description && (
-                    <>
-                        <meta name="description" content={description} key="meta_desc" />
-                        <meta property="twitter:description" content={description} key="meta_twitterDesc" />
-                        <meta property="og:description" content={description} key="meta_ogDesc" />
-                    </>
+                <meta name="description" content={description} key="meta_desc" />
+            )}
+            {description && (
+                <meta property="twitter:description" content={description} key="meta_twitterDesc" />
+            )}
+            {description && (
+                <meta property="og:description" content={description} key="meta_ogDesc" />
             )}
 
             {web_type && (
