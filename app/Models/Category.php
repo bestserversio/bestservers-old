@@ -10,8 +10,8 @@ class Category extends Model
     use HasFactory;
 
     protected $table = 'categories';
-    protected $incrementing = true;
-    protected $timestamps = false;
+    public $incrementing = true;
+    public $timestamps = false;
 
     public static $columns = [
         'id',

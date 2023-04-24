@@ -10,8 +10,8 @@ class Server extends Model
     use HasFactory;
 
     protected $table = 'servers';
-    protected $incrementing = true;
-    protected $timestamps = true;
+    public $incrementing = true;
+    public $timestamps = true;
 
     protected $fillable = [
         'owner_id',

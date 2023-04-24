@@ -11,7 +11,7 @@ class ServerTag extends Model
 
     protected $table = 'server_tags';
     protected $primaryKey = ['server_id', 'tag_name'];
-    protected $incrementing = false;
+    public $incrementing = false;
 
     protected $fillable = [
         'server_id',

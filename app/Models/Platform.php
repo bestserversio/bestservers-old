@@ -10,8 +10,8 @@ class Platform extends Model
     use HasFactory;
 
     protected $table = 'platforms';
-    protected $incrementing = true;
-    protected $timestamps = false;
+    public $incrementing = true;
+    public $timestamps = false;
 
     protected $fillable = [
         'engine_id',

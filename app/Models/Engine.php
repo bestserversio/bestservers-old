@@ -10,8 +10,8 @@ class Engine extends Model
     use HasFactory;
 
     protected $table = 'engines';
-    protected $incrementing = true;
-    protected $timestamps = false;
+    public $incrementing = true;
+    public $timestamps = false;
 
     protected $fillable = [
         'name',

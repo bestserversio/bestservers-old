@@ -11,8 +11,8 @@ class Follow extends Model
 
     protected $table = 'follows';
     protected $primaryKey = ['user_id', 'server_id'];
-    protected $incrementing = false;
-    protected $timestamps = false;
+    public $incrementing = false;
+    public $timestamps = false;
 
     protected $fillable = [
         'created_at',
