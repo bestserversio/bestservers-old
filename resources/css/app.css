@@ -5,8 +5,8 @@
 main {
     @apply min-h-screen;
     @apply bg-gradient-to-r;
-    @apply from-gray-800;
-    @apply to-gray-900;
+    @apply from-gray-900;
+    @apply to-gray-950;
 }
 
 #header {
@@ -23,6 +23,20 @@ main {
     @apply tracking-tight;
 }
 
+#navbar {
+    @apply flex;
+    @apply justify-start;
+    @apply items-center;
+    @apply gap-5;
+}
+
+#navbar > a {
+    @apply text-gray-300;
+    @apply hover:text-white;
+    @apply font-mono;
+    @apply text-sm;
+}
+
 #filters {
     @apply container;
     @apply mx-auto;
@@ -35,7 +49,7 @@ main {
 
 .filter {
     @apply text-gray-200;
-    @apply bg-gray-900;
+    @apply bg-teal-950;
     @apply rounded;
     @apply p-4;
 }
