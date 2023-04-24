@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.form-div {
+    @apply p-4;
+}
+
+.form-div > label {
+    @apply font-extrabold;
+    @apply text-xl;
+    @apply text-white;
+}
+
+.form-div > input,
+.form-div > textarea,
+.form-div > select {
+    @apply w-full;
+    @apply bg-teal-950;
+    @apply rounded;
+    @apply text-gray-200;
+    @apply p-4;
+    @apply ring-green-950;
+}
+
+.form-description {
+    @apply text-sm;
+    @apply text-gray-300;
+}

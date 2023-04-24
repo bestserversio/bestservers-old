@@ -3,65 +3,15 @@
 @tailwind utilities;
 
 main {
+    @apply text-gray-200;
     @apply min-h-screen;
     @apply bg-gradient-to-r;
     @apply from-gray-900;
     @apply to-gray-950;
 }
 
-#header {
-    @apply p-12;
-    @apply flex;
-    @apply flex-col;
-    @apply items-center;
-}
-
-#banner {
+.headline {
     @apply text-white;
-    @apply text-[5rem];
-    @apply font-extrabold;
-    @apply tracking-tight;
-}
-
-#navbar {
-    @apply flex;
-    @apply justify-start;
-    @apply items-center;
-    @apply gap-5;
-}
-
-#navbar > a {
-    @apply text-gray-300;
-    @apply hover:text-white;
-    @apply font-mono;
-    @apply text-sm;
-}
-
-#filters {
-    @apply container;
-    @apply mx-auto;
-    @apply items-center;
-    @apply justify-center;
-    @apply flex;
-    @apply gap-2;
-    @apply w-full;
-}
-
-.filter {
-    @apply text-gray-200;
-    @apply bg-teal-950;
-    @apply rounded;
-    @apply p-4;
-}
-
-#filter-platforms {
-    @apply w-1/4;
-}
-
-#filter-categories {
-    @apply w-1/4;
-}
-
-#filter-search {
-    @apply w-1/2;
+    @apply text-2xl;
+    @apply font-bold;
 }

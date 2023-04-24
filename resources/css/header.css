@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#header {
+    @apply p-12;
+    @apply flex;
+    @apply flex-col;
+    @apply items-center;
+}
+
+#banner {
+    @apply text-white;
+    @apply text-[5rem];
+    @apply font-extrabold;
+    @apply tracking-tight;
+}
+
+#navbar {
+    @apply flex;
+    @apply justify-start;
+    @apply items-center;
+    @apply gap-5;
+}
+
+#navbar > a {
+    @apply text-gray-300;
+    @apply hover:text-white;
+    @apply font-mono;
+    @apply text-sm;
+}

@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#filters {
+    @apply container;
+    @apply mx-auto;
+    @apply items-center;
+    @apply justify-center;
+    @apply flex;
+    @apply gap-2;
+    @apply w-full;
+}
+
+.filter {
+    @apply text-gray-200;
+    @apply bg-teal-950;
+    @apply rounded;
+    @apply p-4;
+}
+
+#filter-platforms {
+    @apply w-1/4;
+}
+
+#filter-categories {
+    @apply w-1/4;
+}
+
+#filter-search {
+    @apply w-1/2;
+}
