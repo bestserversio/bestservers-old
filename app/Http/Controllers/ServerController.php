@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Inertia\Inertia;
+
 class ServerController extends Controller
 {
     /**
@@ -19,7 +21,11 @@ class ServerController extends Controller
      */
     public function create()
     {
-        //
+        $meta = gen_meta();
+
+        return Inertia::render('Servers/Create', [
+            'meta' => $meta
+        ]);
     }
 
     /**
