@@ -15,6 +15,7 @@ CREATE TABLE `categories` (
   `platform_id` bigint(20) unsigned NOT NULL,
   `parent_id` bigint(20) unsigned DEFAULT NULL,
   `has_banner` tinyint(1) NOT NULL DEFAULT 0,
+  `has_icon` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `categories_url_unique` (`url`),
   KEY `categories_platform_id_foreign` (`platform_id`),
@@ -131,6 +132,7 @@ CREATE TABLE `platforms` (
   `html5_external` tinyint(1) NOT NULL DEFAULT 0,
   `html5_url` varchar(256) DEFAULT NULL,
   `engine_id` bigint(20) unsigned DEFAULT NULL,
+  `has_icon` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `platforms_url_unique` (`url`),
   KEY `platforms_engine_id_foreign` (`engine_id`),
@@ -271,3 +273,4 @@ INSERT INTO `migrations` VALUES (17,'2023_04_14_222046_add_website_to_servers',4
 INSERT INTO `migrations` VALUES (18,'2023_04_14_223454_create_tags_table',4);
 INSERT INTO `migrations` VALUES (19,'2023_04_14_223821_create_server_tags_table',5);
 INSERT INTO `migrations` VALUES (20,'2023_04_28_024837_add_columns',6);
+INSERT INTO `migrations` VALUES (21,'2023_04_28_025824_add_columns',7);
