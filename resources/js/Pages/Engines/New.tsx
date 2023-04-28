@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { type MetaType } from '../../Components/Meta';
-import Wrapper from '../../Components/Wrapper';
+import { type MetaType } from '@/Components/Meta';
+import Wrapper from '@/Components/Wrapper';
 
-import Form from '../../Layouts/Forms/Servers/New';
+import Form from '@/Layouts/Forms/Engines/Form';
 
-export default function Create({
+export default function New({
     meta
 } : {
     meta: MetaType
