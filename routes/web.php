@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\ServerController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PlatformController;
+use App\Http\Controllers\EngineController;
+
+use App\Models\Server;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +22,21 @@ use App\Http\Controllers\ServerController;
 */
 
 Route::get('/', function () {
+    // Generate stock meta data.
     $meta = gen_meta();
 
+    // Retrieve all servers.
+    $servers = Server::all();
+
     return Inertia::render('Index', [
-        'meta' => $meta
+        'meta' => $meta,
+        'servers' => $servers
     ]);
 });
 
 Route::resource('servers', ServerController::class);
+Route::resource('categories', CategoryController::class);
+Route::resource('platforms', PlatformController::class);
+Route::resource('engines', EngineController::class);
+
 Route::resource('users', UserController::class);
