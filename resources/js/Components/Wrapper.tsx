@@ -1,8 +1,8 @@
 import React, { ReactNode, useState } from 'react'
 
-import Header from '../Layouts/Header/Main';
+import Header from '@/Layouts/Header/Main';
 import MetaInfo from './Meta';
-import FormFilters, { FilterCallbackTypes, FilterTypes } from '../Layouts/Forms/Filters';
+import FormFilters, { type FilterCallbackTypes, type FilterTypes } from '@/Layouts/Forms/Filters';
 
 const Wrapper: React.FC<{ 
     children: ReactNode
