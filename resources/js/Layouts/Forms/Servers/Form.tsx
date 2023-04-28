@@ -1,13 +1,44 @@
 import React from 'react';
 
-const FormServerNew: React.FC = () => {
+import { type PlatformType, type CategoryType } from '@/Components/Types';
+
+const Form: React.FC<{
+    platforms: PlatformType[]
+    categories: CategoryType[]
+}> = ({
+    platforms,
+    categories
+}) => {
     return (
         <form className="form-gen" action="/servers/create" method="POST">
+            <h3 className="headline">Platform & Category</h3>
+            <div className="form-div">
+                <label htmlFor="platform">Platform</label>
+                <select name="platform">
+                    {platforms.map((platform: PlatformType) => {
+                        return (
+                            <option value={platform.id.toString()}>{platform.name}</option>
+                        );
+                    })}
+                </select>
+            </div>
+
+            <div className="form-div">
+                <label htmlFor="category">Category</label>
+                <select name="category">
+                    {categories.map((category: CategoryType) => {
+                        return (
+                            <option value={category.id.toString()}>{category.name}</option>
+                        );
+                    })}
+                </select>
+            </div>
+
             <h3 className="headline">General</h3>
             <div className="form-div">
                 <label htmlFor="banner">Banner</label>
                 <input type="file" name="banner" />
-                <p><input type="checkbox" name="b-remove" /> Remove</p>
+                <p><input type="checkbox" name="b-remove" /> Remove Current</p>
             </div>
 
             <div className="form-div">
@@ -97,4 +128,4 @@ const FormServerNew: React.FC = () => {
     );
 }
 
-export default FormServerNew;
+export default Form;
