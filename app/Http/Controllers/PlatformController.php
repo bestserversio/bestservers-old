@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use Inertia\Inertia;
 
-class ServerController extends Controller
+class PlatformController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,15 +22,12 @@ class ServerController extends Controller
     public function create()
     {
         $meta = gen_meta();
-        
-        // Platforms & Categories
-        $platforms = [];
-        $categories = [];
 
-        return Inertia::render('Servers/New', [
+        $engines = [];
+
+        return Inertia::render('Platforms/New', [
             'meta' => $meta,
-            'platforms' => $platforms,
-            'categories' => $categories
+            'engines' => $engines
         ]);
     }
 
