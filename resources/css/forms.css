@@ -13,7 +13,7 @@
     @apply text-white;
 }
 
-.form-div > input,
+.form-div > input:not([type="checkbox"]),
 .form-div > textarea,
 .form-div > select {
     @apply w-full;
