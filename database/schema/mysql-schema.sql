@@ -14,6 +14,7 @@ CREATE TABLE `categories` (
   `description` text DEFAULT NULL,
   `platform_id` bigint(20) unsigned NOT NULL,
   `parent_id` bigint(20) unsigned DEFAULT NULL,
+  `has_banner` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `categories_url_unique` (`url`),
   KEY `categories_platform_id_foreign` (`platform_id`),
@@ -30,6 +31,8 @@ CREATE TABLE `engines` (
   `name` varchar(128) NOT NULL,
   `is_discord` tinyint(1) NOT NULL DEFAULT 0,
   `is_a2s` tinyint(1) NOT NULL DEFAULT 0,
+  `description` text DEFAULT NULL,
+  `name_short` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -163,6 +166,19 @@ CREATE TABLE `server_tags` (
   CONSTRAINT `server_tags_tag_name_foreign` FOREIGN KEY (`tag_name`) REFERENCES `tags` (`name`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `server_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `server_tokens` (
+  `server_id` bigint(20) unsigned NOT NULL,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `token` varchar(64) NOT NULL,
+  KEY `server_tokens_server_id_foreign` (`server_id`),
+  KEY `server_tokens_user_id_foreign` (`user_id`),
+  CONSTRAINT `server_tokens_server_id_foreign` FOREIGN KEY (`server_id`) REFERENCES `servers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `server_tokens_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `servers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -254,3 +270,4 @@ INSERT INTO `migrations` VALUES (16,'2023_04_14_214926_create_profiles_table',3)
 INSERT INTO `migrations` VALUES (17,'2023_04_14_222046_add_website_to_servers',4);
 INSERT INTO `migrations` VALUES (18,'2023_04_14_223454_create_tags_table',4);
 INSERT INTO `migrations` VALUES (19,'2023_04_14_223821_create_server_tags_table',5);
+INSERT INTO `migrations` VALUES (20,'2023_04_28_024837_add_columns',6);
