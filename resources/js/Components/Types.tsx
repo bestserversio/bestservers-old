@@ -26,6 +26,8 @@ export type EngineType = {
     id: number
 
     name: string
+    name_short: string
+    description?: string
 
     is_discord: boolean
     is_a2s: boolean
@@ -62,4 +64,9 @@ export type ServerType = {
     social_tiktok: string | null
     social_instagram: string | null
     social_github: string | null
+}
+
+export type ErrorType = {
+    title?: string
+    message: string
 }
