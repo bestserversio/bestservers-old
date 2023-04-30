@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 #header {
     @apply p-12;
     @apply flex;

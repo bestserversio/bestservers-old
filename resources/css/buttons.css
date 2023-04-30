@@ -1,0 +1,10 @@
+.btn {
+    @apply rounded;
+    @apply p-2;
+}
+
+.btn-primary {
+    @apply bg-lime-800;
+    @apply hover:bg-lime-700;
+    @apply text-white;
+}

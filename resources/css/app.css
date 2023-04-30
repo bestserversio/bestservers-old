@@ -15,3 +15,8 @@ main {
     @apply text-2xl;
     @apply font-bold;
 }
+
+.noti-title {
+    @apply text-xl;
+    @apply text-white;
+}

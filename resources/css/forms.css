@@ -1,8 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-
 .form-div {
     @apply p-4;
 }
@@ -27,4 +22,11 @@
 .form-description {
     @apply text-sm;
     @apply text-gray-300;
+}
+
+.form-btn-div {
+    @apply p-4;
+    @apply flex;
+    @apply items-center;
+    @apply justify-center;
 }
