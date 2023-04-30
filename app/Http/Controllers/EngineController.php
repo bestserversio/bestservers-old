@@ -38,21 +38,20 @@ class EngineController extends Controller
         // Generate CSRF token for protection.
         $csrf = csrf_token();
 
-        $error = null;
+        // Handle validation errors if any.
+        $errors = null;
 
-        $errors = $request->session()->get('errors');
+        $errors_session = $request->session()->get('errors');
 
-        if ($errors) {
-            $errors = $errors->engine;
+        if ($errors_session && ($errors_session = $errors_session->engine)) {
+            $errors = [];
 
-            
-            $error = [];
-            $error['title'] = "Unable To Create Engine";
-
-            foreach ($errors->all() as $err) {
-                $error['message'] = $err;
-
-                break;
+            /* To do: Determine field name and use that in title. */
+            foreach ($errors_session->all() as $num => $err) {
+                $errors[] = [
+                    'title' => 'Error #' . ($num + 1),
+                    'message' => $err
+                ];
             }
         }
 
@@ -60,7 +59,7 @@ class EngineController extends Controller
             'meta' => $meta,
             'values' => $vals,
             'csrf' => $csrf,
-            'errors' => $error
+            'errors' => $errors
         ]);
     }
 

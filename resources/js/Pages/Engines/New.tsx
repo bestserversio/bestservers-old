@@ -12,21 +12,29 @@ export default function New({
     meta,
     values,
     csrf,
-    errors = undefined
+    errors
 } : {
     meta: MetaType,
     values?: EngineType,
     csrf: string,
-    errors?: ErrorType
+    errors?: ErrorType[]
 }) {
     return (
         <Wrapper meta={meta}>
             <div className="container mx-auto">
                 {errors && (
-                        <NotiBox
-                            title={errors.title}
-                            message={errors.message}
-                        />
+                    <>
+                        {errors.map((error: ErrorType) => {
+                            return (
+                                <div className="my-4">
+                                    <NotiBox
+                                        title={error.title}
+                                        message={error.message}
+                                    />
+                                </div>
+                            );
+                        })}
+                    </>
                 )}
                 <Form 
                     values={values}
