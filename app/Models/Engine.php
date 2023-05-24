@@ -15,6 +15,8 @@ class Engine extends Model
 
     protected $fillable = [
         'name',
+        'name_short',
+        'description',
         'is_discord',
         'is_a2s'
     ];
