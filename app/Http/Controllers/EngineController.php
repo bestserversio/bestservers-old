@@ -43,29 +43,13 @@ class EngineController extends Controller
         // Generate CSRF token for protection.
         $csrf = csrf_token();
 
-        // Handle validation errors if any.
-        $errors = null;
+        // Retrieve any errors we may have.
+        $errors = $this->getErrors($request);
 
-        $errors_session = $request->session()->get('errors');
-
-        if ($errors_session && ($errors_session = $errors_session->engine)) {
-            $errors = [];
-            $errors_all = $errors_session->all();
-
-            // Make sure we have errors stored in array.
-            if (count($errors_all)) {
-                /* To do: Determine field name and use that in title. */
-                foreach ($errors_session->all() as $num => $err) {
-                    $errors[] = [
-                        'title' => 'Error #' . ($num + 1),
-                        'message' => $err
-                    ];
-                }
-            } else {
-                // If we don't, it indicates a successful entry.
-                $success = true;
-            }
-        }
+        // If $errors isn't NULL, but we don't have any items in our array, it should indicate a success.
+        // Investigate: Maybe flash the session with a 'success' item to indicate success instead of relying on outcome of $errors?
+        if ($errors != null && count($errors) < 1)
+            $success = true;
 
         return Inertia::render('Engines/New', [
             'meta' => $meta,
@@ -157,29 +141,12 @@ class EngineController extends Controller
         // Generate CSRF token for protection.
         $csrf = csrf_token();
 
-        // Handle validation errors if any.
-        $errors = null;
+        // Retrieve any errors we may have.
+        $errors = $this->getErrors($request);
 
-        $errors_session = $request->session()->get('errors');
-
-        if ($errors_session && ($errors_session = $errors_session->engine)) {
-            $errors = [];
-            $errors_all = $errors_session->all();
-
-            // Make sure we have errors stored in array.
-            if (count($errors_all)) {
-                /* To do: Determine field name and use that in title. */
-                foreach ($errors_session->all() as $num => $err) {
-                    $errors[] = [
-                        'title' => 'Error #' . ($num + 1),
-                        'message' => $err
-                    ];
-                }
-            } else {
-                // If we don't, it indicates a successful entry.
-                $success = true;
-            }
-        }
+        // If $errors isn't NULL, but we don't have any items in our array, it should indicate a success.
+        if ($errors != null && count($errors) < 1)
+            $success = true;
 
         return Inertia::render('Engines/New', [
             'meta' => $meta,
@@ -259,5 +226,31 @@ class EngineController extends Controller
             'name.required' => 'The engine name is required.',
             'name_short.required' => 'The engine short name is required.'
         ])->validateWithBag('engine');
+    }
+
+    private function getErrors(Request $request)
+    {
+        // Handle validation errors if any.
+        $errors = null;
+
+        $errors_session = $request->session()->get('errors');
+
+        if ($errors_session && ($errors_session = $errors_session->engine)) {
+            $errors = [];
+            $errors_all = $errors_session->all();
+
+            // Make sure we have errors stored in array.
+            if (count($errors_all)) {
+                // To do: Determine field name and use that in title.
+                foreach ($errors_session->all() as $num => $err) {
+                    $errors[] = [
+                        'title' => 'Error #' . ($num + 1),
+                        'message' => $err
+                    ];
+                }
+            }
+        }
+
+        return $errors;
     }
 }
