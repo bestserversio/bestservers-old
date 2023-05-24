@@ -173,36 +173,39 @@ class EngineController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        Log::debug("Updating engine with ID " . (int)$id);
+        // Start building our response.
         $resp = redirect()->back();
 
-        // Validation
+        // Try to retrieve engine.
+        $engine = Engine::find((int) $id);
+
+        // Check if the engine exists. If not, return a response indicating an error.
+        if (!$engine) {
+            $resp = $resp->with('error', 'Engine not found.');
+            Log::error('Unable to update engine :: Engine ' . $id . ' not found.');
+
+            return $resp;
+        }
+
+        // Create validator.
         $validator = $this->makeValidation($request);
 
         // Check if validated and if so, insert into database.
         if ($validator) {
-            $engine = Engine::find((int) $id);
+            // Update.
+            $engine->update([
+                'name' => $validator['name'],
+                'name_short' => $validator['name_short'],
+                'description' => $validator['description'],
+                'is_a2s' => $request->has('is_a2s'),
+                'is_discord' => $request->has('is_discord')
+            ]);
 
-            if (!$engine) {
-                $resp = $resp->with('error', 'Engine not found.');
-
-                Log::debug("Engine not found!");
-            } else {
-                // Update.
-                $engine->update([
-                    'name' => $validator['name'],
-                    'name_short' => $validator['name_short'],
-                    'description' => $validator['description'],
-                    'is_a2s' => $request->has('is_a2s'),
-                    'is_discord' => $request->has('is_discord')
-                ]);
-
-                $engine->save();
-
-                Log::debug("Updating engine!");
-                Log::debug(print_r($engine, true));
-            }
+            $engine->save();
         }
+
+        Log::info('Updating engine with ID ' . $id);
+        Log::debug('Engine Updated Information => ' . print_r($engine, true));
 
         return $resp->withErrors($validator);
     }
