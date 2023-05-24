@@ -82,25 +82,7 @@ class EngineController extends Controller
     public function store(Request $request)
     {
         // Validation
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'name_short' => 'required|string|max:64',
-            'description' => 'string|nullable'
-        ], [
-            'name.required' => 'The engine name is required.',
-            'name_short.required' => 'The engine short name is required.'
-        ])->validateWithBag('engine');
-
-        // Check if validated and if so, insert into database.
-        if ($validator) {
-            Engine::create([
-                'name' => $validator['name'],
-                'name_short' => $validator['name_short'],
-                'description' => isset($validator['description']) ? $validator['description'] : null,
-                'is_a2s' => $request->has('is_a2s'),
-                'is_discord' => $request->has('is_discord')
-            ]);
-        }
+        $validator = $this->makeValidation($request);
 
         return redirect()->back()->withErrors($validator);
     }
