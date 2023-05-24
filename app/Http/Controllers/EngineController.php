@@ -121,33 +121,28 @@ class EngineController extends Controller
         // If we have old data, this indicates we had errors, but we want to make sure our new data isn't wiped.
         $oldData = $request->old('name', null);
 
-        if ($oldData) {
+        if ($oldData)
             $vals['name'] = $oldData;
-        }
 
         $oldData = $request->old('name_short', null);
 
-        if ($oldData) {
+        if ($oldData)
             $vals['name_short'] = $oldData;
-        }
 
         $oldData = $request->old('description', null);
 
-        if ($oldData) {
+        if ($oldData)
             $vals['description'] = $oldData;
-        }
 
         $oldData = $request->old('is_a2s', null);
 
-        if ($oldData) {
+        if ($oldData)
             $vals['is_a2s'] = $oldData;
-        }
 
         $oldData = $request->old('is_discord', null);
 
-        if ($oldData) {
+        if ($oldData)
             $vals['is_discord'] = $oldData;
-        }
 
         // Successful edit.
         $success = false;
@@ -221,11 +216,10 @@ class EngineController extends Controller
 
         $engine = Engine::find((int) $id);
 
-        if (!$engine) {
+        if (!$engine)
             $resp = $resp->with('error', 'Engine not found.');
-        } else {
+        else
             $engine->delete();
-        }
 
         return $resp;
     }
