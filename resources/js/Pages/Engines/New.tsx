@@ -10,16 +10,20 @@ import NotiBox from '@/Layouts/Notifications/Box'
 
 export default function New({
     meta,
+    id,
     values,
     csrf,
     errors,
-    success
+    success,
+    btn_text="Create!"
 } : {
     meta: MetaType,
+    id?: number,
     values?: EngineType,
     csrf: string,
     errors?: ErrorType[]
-    success: boolean
+    success: boolean,
+    btn_text?: string
 }) {
     return (
         <Wrapper meta={meta}>
@@ -42,14 +46,16 @@ export default function New({
                     <div className="container mx-auto p-4">
                         <NotiBox
                             title="Success!"
-                            message="Successfully created new engine!"
+                            message={id ? "Successfully edited engine!" : "Successfully created new engine!"}
                             bg_class="bg-green-600/50"
                         />
                     </div>
                 )}
-                <Form 
+                <Form
+                    id={id} 
                     values={values}
                     csrf={csrf}
+                    btn_text={btn_text}
                 />
             </div>
         </Wrapper>

@@ -1,19 +1,25 @@
 import React from 'react';
 
 import { type EngineType } from '@/Components/Types';
+import internal from 'stream';
 
 const Form: React.FC<{
+    id?: number,
     values?: EngineType,
     csrf: string,
     btn_text?: string
 }> = ({
+    id,
     values,
     csrf,
     btn_text="Create!"
 }) => {
     return (
-        <form className="form-gen" action="/engines" method="POST">
+        <form className="form-gen" action={id ? "/engines/" + id : "/engines"} method="POST">
             <input type="hidden" name="_token" value={csrf} />
+            {id && (
+                <input type="hidden" name="_method" value="PUT" />
+            )}
 
             <div className="form-div">
                 <label htmlFor="name">Name*</label>
