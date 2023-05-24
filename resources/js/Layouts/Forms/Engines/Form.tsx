@@ -33,11 +33,11 @@ const Form: React.FC<{
             <h3 className="headline">Flags</h3>
             <div className="form-div">
                 <div className="flex items-center gap-2">
-                    <input type="checkbox" name="is_a2s" defaultValue={values?.is_a2s ? "1" : "0"} /> <label htmlFor="is_a2s">Is A2S</label>
+                    <input type="checkbox" name="is_a2s" value={values?.is_a2s ? "1" : "0"} /> <label htmlFor="is_a2s">Is A2S</label>
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <input type="checkbox" name="is_discord" defaultValue={values?.is_discord ? "1" : "0"} /> <label htmlFor="is_discord">Is Discord</label>
+                    <input type="checkbox" name="is_discord" value={values?.is_discord ? "1" : "0"} /> <label htmlFor="is_discord">Is Discord</label>
                 </div>
             </div>
 
