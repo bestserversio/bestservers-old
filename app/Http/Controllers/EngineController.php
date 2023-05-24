@@ -9,6 +9,8 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\Engine;
+
 class EngineController extends Controller
 {
     /**
@@ -35,6 +37,9 @@ class EngineController extends Controller
             'is_discord' => $request->old('is_discord', false)
         ];
 
+        // Successful insert.
+        $success = false;
+
         // Generate CSRF token for protection.
         $csrf = csrf_token();
 
@@ -45,13 +50,20 @@ class EngineController extends Controller
 
         if ($errors_session && ($errors_session = $errors_session->engine)) {
             $errors = [];
+            $errors_all = $errors_session->all();
 
-            /* To do: Determine field name and use that in title. */
-            foreach ($errors_session->all() as $num => $err) {
-                $errors[] = [
-                    'title' => 'Error #' . ($num + 1),
-                    'message' => $err
-                ];
+            // Make sure we have errors stored in array.
+            if (count($errors_all)) {
+                /* To do: Determine field name and use that in title. */
+                foreach ($errors_session->all() as $num => $err) {
+                    $errors[] = [
+                        'title' => 'Error #' . ($num + 1),
+                        'message' => $err
+                    ];
+                }
+            } else {
+                // If we don't, it indicates a successful entry.
+                $success = true;
             }
         }
 
@@ -59,7 +71,8 @@ class EngineController extends Controller
             'meta' => $meta,
             'values' => $vals,
             'csrf' => $csrf,
-            'errors' => $errors
+            'errors' => $errors,
+            'success' => $success
         ]);
     }
 
@@ -72,14 +85,24 @@ class EngineController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'name_short' => 'required|string|max:64',
-            'description' => 'string',
-            'is_a2s' => 'required|boolean',
-            'is_discord' => 'required|boolean'
+            'description' => 'string|nullable',
+            'is_a2s' => 'boolean',
+            'is_discord' => 'boolean'
         ], [
             'name.required' => 'The engine name is required.',
-            'name_short.required' => 'The engine short name is required.',
-            'is_a2s.required' => 'The engine is A2S field is required.'
+            'name_short.required' => 'The engine short name is required.'
         ])->validateWithBag('engine');
+
+        // Check if validated and if so, insert into database.
+        if ($validator) {
+            Engine::create([
+                'name' => $validator['name'],
+                'name_short' => $validator['name_short'],
+                'description' => isset($validator['description']) ? $validator['description'] : null,
+                'is_a2s' => isset($validator['is_a2s']) ? $validator['is_a2s'] : false,
+                'is_discord' => isset($validator['is_discord']) ? $validator['is_discord'] : false
+            ]);
+        }
 
         return redirect()->back()->withErrors($validator);
     }
