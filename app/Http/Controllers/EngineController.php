@@ -85,9 +85,7 @@ class EngineController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'name_short' => 'required|string|max:64',
-            'description' => 'string|nullable',
-            'is_a2s' => 'boolean',
-            'is_discord' => 'boolean'
+            'description' => 'string|nullable'
         ], [
             'name.required' => 'The engine name is required.',
             'name_short.required' => 'The engine short name is required.'
@@ -99,8 +97,8 @@ class EngineController extends Controller
                 'name' => $validator['name'],
                 'name_short' => $validator['name_short'],
                 'description' => isset($validator['description']) ? $validator['description'] : null,
-                'is_a2s' => isset($validator['is_a2s']) ? $validator['is_a2s'] : false,
-                'is_discord' => isset($validator['is_discord']) ? $validator['is_discord'] : false
+                'is_a2s' => $request->has('is_a2s'),
+                'is_discord' => $request->has('is_discord')
             ]);
         }
 
