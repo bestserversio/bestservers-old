@@ -48,7 +48,7 @@ class EngineController extends Controller
 
         // If $errors isn't NULL, but we don't have any items in our array, it should indicate a success.
         // Investigate: Maybe flash the session with a 'success' item to indicate success instead of relying on outcome of $errors?
-        if ($errors != null && count($errors) < 1)
+        if (isset($errors) && empty($errors))
             $success = true;
 
         return Inertia::render('Engines/New', [
@@ -65,10 +65,24 @@ class EngineController extends Controller
      */
     public function store(Request $request)
     {
+        $resp = redirect()->back();
+
         // Validation
         $validator = $this->makeValidation($request);
 
-        return redirect()->back()->withErrors($validator);
+        // Create engine.
+        $engine = Engine::create([
+            'name' => $validator['name'],
+            'name_short' => $validator['name_short'],
+            'description' => $validator['description'],
+            'is_a2s' => $request->has('is_a2s'),
+            'is_discord' => $request->has('is_discord')
+        ]);
+
+        if (!$engine)
+            return $resp->with('error', 'Engine not created successfully.');
+
+        return $resp->withErrors($validator);
     }
 
     /**
@@ -145,7 +159,7 @@ class EngineController extends Controller
         $errors = $this->getErrors($request);
 
         // If $errors isn't NULL, but we don't have any items in our array, it should indicate a success.
-        if ($errors != null && count($errors) < 1)
+        if (isset($errors) && empty($errors))
             $success = true;
 
         return Inertia::render('Engines/New', [
