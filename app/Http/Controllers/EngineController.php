@@ -70,18 +70,20 @@ class EngineController extends Controller
         // Validation
         $validator = $this->makeValidation($request);
 
-        // Create engine.
-        $engine = Engine::create([
-            'name' => $validator['name'],
-            'name_short' => $validator['name_short'],
-            'description' => $validator['description'],
-            'is_a2s' => $request->has('is_a2s'),
-            'is_discord' => $request->has('is_discord')
-        ]);
+        if ($validator) {
+            // Create engine.
+            $engine = Engine::create([
+                'name' => $validator['name'],
+                'name_short' => $validator['name_short'],
+                'description' => $validator['description'],
+                'is_a2s' => $request->has('is_a2s'),
+                'is_discord' => $request->has('is_discord')
+            ]);
 
-        if (!$engine)
-            return $resp->with('error', 'Engine not created successfully.');
-
+            if (!$engine)
+                return $resp->with('error', 'Engine not created successfully.');
+        }
+        
         return $resp->withErrors($validator);
     }
 
