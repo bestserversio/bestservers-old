@@ -14,10 +14,12 @@ export type PlatformType = {
     id: number
 
     name: string
+    name_short: string
+    description?: string
     url: string
     has_banner: boolean
 
-    html5_supproted: boolean
+    html5_supported: boolean
     html5_external: boolean
     html5_url: string | null
 }

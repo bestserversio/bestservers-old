@@ -5,19 +5,33 @@ import Wrapper from '@/Components/Wrapper';
 
 import Form from '@/Layouts/Forms/Platforms/Form';
 
-import { type EngineType } from '@/Components/Types';
+import { type PlatformType, type EngineType } from '@/Components/Types';
 
 export default function New({
     meta,
-    engines
+    id,
+    values,
+    csrf,
+    engines,
+    btn_text
 } : {
-    meta: MetaType
-    engines: EngineType[]
+    meta: MetaType,
+    id?: number,
+    values?: PlatformType,
+    csrf: string,
+    engines: EngineType[],
+    btn_text?: string
 }) {
     return (
         <Wrapper meta={meta}>
             <div className="container mx-auto">
-                <Form engines={engines}/>
+                <Form
+                    id={id}
+                    values={values}
+                    csrf={csrf} 
+                    engines={engines}
+                    btn_text={btn_text}
+                />
             </div>
         </Wrapper>
     );
