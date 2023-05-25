@@ -134,6 +134,7 @@ CREATE TABLE `platforms` (
   `html5_url` varchar(256) DEFAULT NULL,
   `engine_id` bigint(20) unsigned DEFAULT NULL,
   `has_icon` tinyint(1) NOT NULL DEFAULT 0,
+  `name_short` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `platforms_url_unique` (`url`),
   KEY `platforms_engine_id_foreign` (`engine_id`),
@@ -276,3 +277,4 @@ INSERT INTO `migrations` VALUES (19,'2023_04_14_223821_create_server_tags_table'
 INSERT INTO `migrations` VALUES (20,'2023_04_28_024837_add_columns',6);
 INSERT INTO `migrations` VALUES (21,'2023_04_28_025824_add_columns',7);
 INSERT INTO `migrations` VALUES (22,'2023_04_28_033138_add_columns',8);
+INSERT INTO `migrations` VALUES (23,'2023_05_25_061249_alter_platforms_table',9);
