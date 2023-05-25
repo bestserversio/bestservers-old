@@ -135,6 +135,7 @@ CREATE TABLE `platforms` (
   `engine_id` bigint(20) unsigned DEFAULT NULL,
   `has_icon` tinyint(1) NOT NULL DEFAULT 0,
   `name_short` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `platforms_url_unique` (`url`),
   KEY `platforms_engine_id_foreign` (`engine_id`),
@@ -278,3 +279,4 @@ INSERT INTO `migrations` VALUES (20,'2023_04_28_024837_add_columns',6);
 INSERT INTO `migrations` VALUES (21,'2023_04_28_025824_add_columns',7);
 INSERT INTO `migrations` VALUES (22,'2023_04_28_033138_add_columns',8);
 INSERT INTO `migrations` VALUES (23,'2023_05_25_061249_alter_platforms_table',9);
+INSERT INTO `migrations` VALUES (24,'2023_05_25_061628_alter_platforms_table',10);
