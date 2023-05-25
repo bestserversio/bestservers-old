@@ -16,7 +16,8 @@ CREATE TABLE `categories` (
   `parent_id` bigint(20) unsigned DEFAULT NULL,
   `has_banner` tinyint(1) NOT NULL DEFAULT 0,
   `has_icon` tinyint(1) NOT NULL DEFAULT 0,
-  `map_prefix` varchar(32) NOT NULL,
+  `map_prefix` varchar(32) DEFAULT NULL,
+  `name_short` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `categories_url_unique` (`url`),
   KEY `categories_platform_id_foreign` (`platform_id`),
@@ -280,3 +281,5 @@ INSERT INTO `migrations` VALUES (21,'2023_04_28_025824_add_columns',7);
 INSERT INTO `migrations` VALUES (22,'2023_04_28_033138_add_columns',8);
 INSERT INTO `migrations` VALUES (23,'2023_05_25_061249_alter_platforms_table',9);
 INSERT INTO `migrations` VALUES (24,'2023_05_25_061628_alter_platforms_table',10);
+INSERT INTO `migrations` VALUES (25,'2023_05_25_231716_alter_categories_table',11);
+INSERT INTO `migrations` VALUES (26,'2023_05_25_231935_alter_categories_table',12);
