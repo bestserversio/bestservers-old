@@ -16,7 +16,7 @@ class EngineController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
     }
@@ -101,7 +101,7 @@ class EngineController extends Controller
         $meta = gen_meta();
 
         // Retrieve existing engine.
-        $engine = Engine::firstWhere('id', (int) $id);
+        $engine = Engine::find((int) $id);
 
         if (!$engine) {
             return Inertia::render('Error/ResourceNotFound', [
