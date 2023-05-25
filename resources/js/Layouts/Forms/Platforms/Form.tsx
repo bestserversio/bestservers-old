@@ -15,8 +15,12 @@ const Form: React.FC<{
     engines,
     btn_text="Create!"
 }) => {
+    // If engines is null, create empty array to prevent error.
+    if (engines == null)
+        engines = [];
+
     return (
-        <form className="form-gen" action="/platforms/create" method="POST">
+        <form className="form-gen" action={id ? "/platforms/" + id : "/platforms"} method="POST">
             <input type="hidden" name="_token" value={csrf} />
             {id && (
                 <input type="hidden" name="_method" value="PUT" />
@@ -36,11 +40,11 @@ const Form: React.FC<{
 
             <div className="form-div">
                 <label htmlFor="engine">Engine</label>
-                <select name="engine">
+                <select name="engine" defaultValue={values?.engine}>
                     <option value="0">None</option>
                     {engines.map((engine: EngineType) => {
                         return (
-                            <option selected={values?.id == engine.id} value={engine.id.toString()}>{engine.name}</option>
+                            <option value={engine.id.toString()}>{engine.name}</option>
                         );
                     })}
                 </select>

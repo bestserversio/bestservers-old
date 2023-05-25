@@ -14,7 +14,7 @@ export default function New({
     values,
     csrf,
     errors,
-    success,
+    success=false,
     btn_text="Create!"
 } : {
     meta: MetaType,
@@ -22,7 +22,7 @@ export default function New({
     values?: EngineType,
     csrf: string,
     errors?: ErrorType[]
-    success: boolean,
+    success?: boolean,
     btn_text?: string
 }) {
     return (

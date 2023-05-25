@@ -13,6 +13,8 @@ export type CategoryType = {
 export type PlatformType = {
     id: number
 
+    engine: number
+
     name: string
     name_short: string
     description?: string
