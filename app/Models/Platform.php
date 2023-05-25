@@ -16,6 +16,8 @@ class Platform extends Model
     protected $fillable = [
         'engine_id',
         'name',
+        'name_short',
+        'description',
         'url',
         'has_banner',
         'html5_supported',
