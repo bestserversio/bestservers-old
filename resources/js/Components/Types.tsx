@@ -1,13 +1,17 @@
-import React from 'react';
-
 export type CategoryType = {
     id: number
+
     platformId: number
-    parent: number | null
+    parent?: number
+
+    has_banner: boolean
+    has_icon: boolean
 
     name: string
+    name_short: string
+    map_prefix?: string
     url: string | null
-    description: string | null
+    description?: string
 }
 
 export type PlatformType = {
@@ -19,11 +23,13 @@ export type PlatformType = {
     name_short: string
     description?: string
     url: string
+
     has_banner: boolean
+    has_icon: boolean
 
     html5_supported: boolean
     html5_external: boolean
-    html5_url: string | null
+    html5_url?: string
 }
 
 export type EngineType = {
