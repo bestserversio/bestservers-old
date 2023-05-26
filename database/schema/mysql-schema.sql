@@ -219,7 +219,7 @@ CREATE TABLE `servers` (
   `platform_id` bigint(20) unsigned NOT NULL,
   `category_id` bigint(20) unsigned DEFAULT NULL,
   `has_avatar` tinyint(1) NOT NULL DEFAULT 0,
-  `social_website` varchar(255) NOT NULL,
+  `social_website` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `servers_url_unique` (`url`),
   KEY `servers_owner_id_foreign` (`owner_id`),
@@ -285,3 +285,4 @@ INSERT INTO `migrations` VALUES (24,'2023_05_25_061628_alter_platforms_table',10
 INSERT INTO `migrations` VALUES (25,'2023_05_25_231716_alter_categories_table',11);
 INSERT INTO `migrations` VALUES (26,'2023_05_25_231935_alter_categories_table',12);
 INSERT INTO `migrations` VALUES (27,'2023_05_26_053458_alter_servers_table',13);
+INSERT INTO `migrations` VALUES (28,'2023_05_26_053835_alter_servers_table',14);
