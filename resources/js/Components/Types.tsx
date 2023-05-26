@@ -48,6 +48,9 @@ export type ServerType = {
     created_at: Date
     updated_at: Date
 
+    platform: number
+    category?: number
+
     name: string
     description: string | null
     url: string
@@ -56,24 +59,26 @@ export type ServerType = {
 
     players: number
     max_players: number
-    map: string | null
-    last_scanned: Date | null
-    last_stat: Date | null
+    map?: string
+    last_scanned?: Date
+    last_stat?: Date
 
-    ipv4: string | null
-    ipv6: string | null
-    port: number | null
-    host_name: string | null
+    ipv4?: string
+    ipv6?: string
+    port?: number
+    host_name?: string
 
-    location_lat: number | null
-    location_lon: number | null
+    location_lat?: number
+    location_lon?: number
 
-    social_twitter: string | null
-    social_youtube: string | null
-    social_facebook: string | null
-    social_tiktok: string | null
-    social_instagram: string | null
-    social_github: string | null
+    social_website?: string
+    social_twitter?: string
+    social_youtube?: string
+    social_facebook?: string
+    social_tiktok?: string
+    social_instagram?: string
+    social_github?: string
+    social_steam?: string
 }
 
 export type ErrorType = {
