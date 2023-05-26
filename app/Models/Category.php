@@ -13,18 +13,14 @@ class Category extends Model
     public $incrementing = true;
     public $timestamps = false;
 
-    public static $columns = [
+    protected $fillable = [
         'id',
         'platform_id',
+        'parent_id',
         'name',
+        'name_short',
         'url',
-        'description'
-    ];
-
-    protected $fillable = [
-        'platform_id',
-        'name',
-        'url',
+        'map_prefix',
         'description'
     ];
 }
