@@ -122,8 +122,8 @@ class ServerController extends Controller
 
             // To Do: Do more validation/parsing.
 
-            // Create server.
-            $server = Server::create([
+            // Create our data array.
+            $data = [
                 'platform_id' => $platform->id,
                 'category_id' => isset($category) ? $category->id : null,
                 'name' => $validator['name'],
@@ -144,10 +144,54 @@ class ServerController extends Controller
                 'social_instagram' => $validator['social_instagram'],
                 'social_github' => $validator['social_github'],
                 'social_steam' => $validator['social_steam']
-            ]);
+            ];
+
+            // Create server.
+            $server = Server::create($data);
 
             if (!$server)
                 return $resp->with('error', 'Server not created successfully.');
+
+            $resave = false;
+
+            // Check if we have an avatar or banner to upload/set.
+            if ($request->hasFile('avatar')) {
+                // Retrieve avatar.
+                $avatar = $request->file('avatar');
+
+                // Generate file name.
+                $ext = $avatar->clientExtension();
+                $file_name = $server->id . '.' . $ext;
+
+                // Store publicly.
+                $avatar->storePubliclyAs('servers/avatars', $file_name, 'public');
+
+                // Set avatar on server.
+                $server->has_avatar = true;
+
+                $resave = true;
+            }
+
+            if ($request->hasFile('banner')) {
+                // Retrieve banner.
+                $banner = $request->file('banner');
+
+                // Generate file name.
+                $ext = $banner->clientExtension();
+                $file_name = $server->id . '.' . $ext;
+
+                // Store publicly.
+                $banner->storePubliclyAs('servers/banners', $file_name, 'public');
+
+                // Set banner on server.
+                $server->has_banner = true;
+
+                $resave = true;
+            }
+
+            // Save the server if we need to.
+            if ($resave)
+                $server->save();
         }
 
         return $resp->withErrors($validator);
@@ -368,8 +412,8 @@ class ServerController extends Controller
             if ($validator['category'])
                 $category = Category::find((int) $validator['category']);
 
-            // Update.
-            $server->update([
+            // Create our data array.
+            $data = [
                 'platform_id' => $platform->id,
                 'category_id' => isset($category) ? $category->id : 0,
                 'name' => $validator['name'],
@@ -390,7 +434,45 @@ class ServerController extends Controller
                 'social_instagram' => $validator['social_instagram'],
                 'social_github' => $validator['social_github'],
                 'social_steam' => $validator['social_steam']
-            ]);
+            ];
+
+            // Since we're updating our server, we can handle our avatar and banner data now.
+            if ($request->has('a-remove'))
+                $data['has_avatar'] = false;
+            else if ($request->hasFile('avatar')) {
+                // Retrieve avatar.
+                $avatar = $request->file('avatar');
+
+                // Generate file name.
+                $ext = $avatar->clientExtension();
+                $file_name = $server->id . '.' . $ext;
+
+                // Store publicly.
+                $avatar->storePubliclyAs('servers/avatars', $file_name, 'public');
+
+                // Set server avatar.
+                $data['has_avatar'] = true;
+            }
+
+            if ($request->has('b-remove'))
+                $data['has_banner'] = false;
+            else if ($request->hasFile('banner')) {
+                // Retrieve banner.
+                $banner = $request->file('banner');
+
+                // Generate file name.
+                $ext = $banner->clientExtension();
+                $file_name = $server->id . '.' . $ext;
+
+                // Store publicly.
+                $banner->storePubliclyAs('servers/banners', $file_name, 'public');
+
+                // Set server banner.
+                $data['has_banner'] = true;
+            }
+
+            // Update.
+            $server->update($data);
 
             $server->save();
         }
