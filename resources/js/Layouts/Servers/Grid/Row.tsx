@@ -1,9 +1,15 @@
 import React from 'react';
 
-const ServerGridRow: React.FC = () => {
+import {type ServerType} from '@/Components/Types';
+
+const Row: React.FC<{
+    server: ServerType
+}> = ({ 
+    server
+}) => {
     return (
         <p>Placeholder.</p>
     );
 }
 
-export default ServerGridRow;
+export default Row;
