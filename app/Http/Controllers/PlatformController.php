@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 use Inertia\Inertia;
 
@@ -89,8 +90,8 @@ class PlatformController extends Controller
                 return $resp->withInput();
             }
 
-            // Create engine.
-            $platform = Platform::create([
+            // Create data for new platform.
+            $data = [
                 'engine_id' => $engine->id,
                 'name' => $validator['name'],
                 'name_short' => $validator['name_short'],
@@ -99,10 +100,54 @@ class PlatformController extends Controller
                 'html5_supported' => $request->has('html5_supported'),
                 'html5_external' => $request->has('html5_external'),
                 'html5_url' => $validator['html5_url']
-            ]);
+            ];
+
+            // Create engine.
+            $platform = Platform::create($data);
 
             if (!$platform)
                 return $resp->with('error', 'Platform not created successfully.');
+
+            $resave = false;
+
+            // Check if we have an icon or banner to upload/set.
+            if ($request->hasFile('icon')) {
+                // Retrieve icon.
+                $icon = $request->file('icon');
+
+                // Generate file name.
+                $ext = $icon->clientExtension();
+                $file_name = $platform->id . '.' . $ext;
+
+                // Store publicly.
+                $icon->storePubliclyAs('platforms/icons', $file_name, 'public');
+
+                // Set icon on platform.
+                $platform->has_icon = true;
+
+                $resave = true;
+            }
+
+            if ($request->hasFile('banner')) {
+                // Retrieve banner.
+                $banner = $request->file('banner');
+
+                // Generate file name.
+                $ext = $banner->clientExtension();
+                $file_name = $platform->id . '.' . $ext;
+
+                // Store publicly.
+                $banner->storePubliclyAs('platforms/banners', $file_name, 'public');
+
+                // Set icon on platform.
+                $platform->has_banner = true;
+
+                $resave = true;
+            }
+
+            // Save the platform if we need to.
+            if ($resave)
+                $platform->save();
         }
 
         return $resp->withErrors($validator);
@@ -248,8 +293,8 @@ class PlatformController extends Controller
                 return $resp;
             }
 
-            // Update.
-            $platform->update([
+            // Create data array with our updated values.
+            $data = [
                 'engine_id' => $engine->id,
                 'name' => $validator['name'],
                 'name_short' => $validator['name_short'],
@@ -258,7 +303,45 @@ class PlatformController extends Controller
                 'html5_supported' => $request->has('html5_supported'),
                 'html5_external' => $request->has('html5_external'),
                 'html5_url' => $validator['html5_url']
-            ]);
+            ];
+
+            // Since we're updating our platform, we can handle our icon and banner data now.
+            if ($request->has('i-remove'))
+                $data['has_icon'] = false;
+            else if ($request->hasFile('icon')) {
+                // Retrieve icon.
+                $icon = $request->file('icon');
+
+                // Generate file name.
+                $ext = $icon->clientExtension();
+                $file_name = $platform->id . '.' . $ext;
+
+                // Store publicly.
+                $icon->storePubliclyAs('platforms/icons', $file_name, 'public');
+
+                // Set platform icon.
+                $data['has_icon'] = true;
+            }
+
+            if ($request->has('b-remove'))
+                $data['has_banner'] = false;
+            else if ($request->hasFile('banner')) {
+                // Retrieve banner.
+                $banner = $request->file('banner');
+
+                // Generate file name.
+                $ext = $banner->clientExtension();
+                $file_name = $platform->id . '.' . $ext;
+
+                // Store publicly.
+                $banner->storePubliclyAs('platforms/banners', $file_name, 'public');
+
+                // Set platform banner.
+                $data['has_banner'] = true;
+            }
+
+            // Update.
+            $platform->update($data);
 
             $platform->save();
         }
