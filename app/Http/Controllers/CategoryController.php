@@ -97,8 +97,8 @@ class CategoryController extends Controller
             if (isset($validator['parent']))
                 $parent = Category::find((int) $validator['parent']);
 
-            // Create category.
-            $category = Category::create([
+            // Create our data array.
+            $data = [
                 'platform_id' => $platform->id,
                 'parent_id' => isset($parent) ? $parent->id : null,
                 'name' => $validator['name'],
@@ -106,10 +106,52 @@ class CategoryController extends Controller
                 'url' => $validator['url'],
                 'map_prefix' => $validator['map_prefix'],
                 'description' => $validator['description']
-            ]);
+            ];
+
+            // Create category.
+            $category = Category::create($data);
 
             if (!$category)
                 return $resp->with('error', 'Category not created successfully.');
+
+            // Check if we have an icon or banner to upload/set.
+            if ($request->hasFile('icon')) {
+                // Retrieve icon.
+                $icon = $request->file('icon');
+
+                // Generate file name.
+                $ext = $icon->clientExtension();
+                $file_name = $category->id . '.' . $ext;
+
+                // Store publicly.
+                $icon->storePubliclyAs('categories/icons', $file_name, 'public');
+
+                // Set icon on category.
+                $category->has_icon = true;
+
+                $resave = true;
+            }
+
+            if ($request->hasFile('banner')) {
+                // Retrieve banner.
+                $banner = $request->file('banner');
+
+                // Generate file name.
+                $ext = $banner->clientExtension();
+                $file_name = $category->id . '.' . $ext;
+
+                // Store publicly.
+                $banner->storePubliclyAs('categories/banners', $file_name, 'public');
+
+                // Set icon on platform.
+                $category->has_banner = true;
+
+                $resave = true;
+            }
+
+            // Save the category if we need to.
+            if ($resave)
+                $category->save();
         }
 
         return $resp->withErrors($validator);
@@ -254,8 +296,8 @@ class CategoryController extends Controller
             if ($validator['parent'])
                 $parent = Category::find((int) $validator['parent']);
 
-            // Update.
-            $category->update([
+            // Create our data array.
+            $data = [
                 'platform_id' => $platform->id,
                 'parent_id' => isset($parent) ? $parent->id : 0,
                 'name' => $validator['name'],
@@ -263,7 +305,45 @@ class CategoryController extends Controller
                 'url' => $validator['url'],
                 'map_prefix' => $validator['map_prefix'],
                 'description' => $validator['description']
-            ]);
+            ];
+
+            // Since we're updating our category, we can handle our icon and banner data now.
+            if ($request->has('i-remove'))
+                $data['has_icon'] = false;
+            else if ($request->hasFile('icon')) {
+                // Retrieve icon.
+                $icon = $request->file('icon');
+
+                // Generate file name.
+                $ext = $icon->clientExtension();
+                $file_name = $category->id . '.' . $ext;
+
+                // Store publicly.
+                $icon->storePubliclyAs('categories/icons', $file_name, 'public');
+
+                // Set category icon.
+                $data['has_icon'] = true;
+            }
+
+            if ($request->has('b-remove'))
+                $data['has_banner'] = false;
+            else if ($request->hasFile('banner')) {
+                // Retrieve banner.
+                $banner = $request->file('banner');
+
+                // Generate file name.
+                $ext = $banner->clientExtension();
+                $file_name = $category->id . '.' . $ext;
+
+                // Store publicly.
+                $banner->storePubliclyAs('categories/banners', $file_name, 'public');
+
+                // Set category banner.
+                $data['has_banner'] = true;
+            }
+
+            // Update.
+            $category->update($data);
 
             $category->save();
         }
