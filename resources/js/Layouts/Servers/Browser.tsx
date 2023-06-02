@@ -5,7 +5,7 @@ import { type ServerType } from '@/Components/Types';
 import GridRow from './Grid/Row'
 import TableRow from './Table/Row'
 
-const ServerBrowser: React.FC<{
+const Browser: React.FC<{
     servers: ServerType[]
     grid?: boolean 
 }> = ({ 
@@ -47,4 +47,4 @@ const ServerBrowser: React.FC<{
     );
 }
 
-export default ServerBrowser;
+export default Browser;
