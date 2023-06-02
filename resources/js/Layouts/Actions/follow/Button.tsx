@@ -1,9 +1,9 @@
 import React from 'react';
 
-const ActionFollowButton: React.FC = () => {
+const Button: React.FC = () => {
     return (
         <p>Placeholder.</p>
     );
 }
 
-export default ActionFollowButton;
+export default Button;

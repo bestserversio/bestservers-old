@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Notifications: React.FC<{
+const Row: React.FC<{
     title?: string
     message: string
     bg_class?: string
@@ -21,4 +21,4 @@ const Notifications: React.FC<{
     );
 }
 
-export default Notifications;
+export default Row;

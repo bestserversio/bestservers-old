@@ -12,7 +12,7 @@ export type FilterCallbackTypes = {
     setSearch: React.Dispatch<React.SetStateAction<string>>
 }
 
-const FormFilters: React.FC<{ 
+const Filters: React.FC<{ 
     filters: FilterTypes,
     filterCallbacks: FilterCallbackTypes
 }> = ({
@@ -45,4 +45,4 @@ const FormFilters: React.FC<{
     );
 }
 
-export default FormFilters;
+export default Filters;

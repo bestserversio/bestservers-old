@@ -1,9 +1,9 @@
 import React from 'react';
 
-const UserProfileTabGeneral: React.FC = () => {
+const General: React.FC = () => {
     return (
         <p>Placeholder.</p>
     )
 }
 
-export default UserProfileTabGeneral;
+export default General;
