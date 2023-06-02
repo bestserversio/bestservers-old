@@ -81,6 +81,12 @@ export type ServerType = {
     social_steam?: string
 }
 
+export type ServerStat {
+    players: number
+    max_players: number
+    date: Date
+}
+
 export type ErrorType = {
     title?: string
     message: string
