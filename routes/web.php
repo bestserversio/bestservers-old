@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -7,6 +6,9 @@ use App\Http\Controllers\ServerController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\EngineController;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 use App\Models\Server;
 
@@ -21,6 +23,7 @@ use App\Models\Server;
 |
 */
 
+// Index.
 Route::get('/', function () {
     // Generate stock meta data.
     $meta = gen_meta();
@@ -34,9 +37,32 @@ Route::get('/', function () {
     ]);
 });
 
+// Content item routes.
 Route::resource('servers', ServerController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('platforms', PlatformController::class);
 Route::resource('engines', EngineController::class);
 
+// Retrieving servers.
+Route::get('/serverlist', function (Request $request) {
+    // Start building our server query.
+    $servers = Server::query();
+
+    // Filter options.
+    $platforms = $request->get('platforms', null);
+    $categories = $request->get('categories', null);
+
+    if ($platforms)
+        $servers = $servers->whereIn('platform_id', $platforms);
+
+    if ($categories)
+        $servers = $servers->whereIn('category_id', $categories);
+
+    
+    $servers = $servers->cursorPaginate(config('SERVERS_PER_PAGE'));
+
+    return Response::json($servers);
+});
+
+// Users.
 Route::resource('users', UserController::class);
