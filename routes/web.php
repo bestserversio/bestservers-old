@@ -52,12 +52,15 @@ Route::get('/serverlist', function (Request $request) {
     $platforms = $request->get('platforms', null);
     $categories = $request->get('categories', null);
 
-    if ($platforms)
+    if ($platforms) {
+        $platforms = explode(',', $platforms);
         $servers = $servers->whereIn('platform_id', $platforms);
+    }
 
-    if ($categories)
+    if ($categories) {
+        $categories = explode(',', $categories);
         $servers = $servers->whereIn('category_id', $categories);
-
+    }
     
     $servers = $servers->cursorPaginate(config('SERVERS_PER_PAGE'));
 
