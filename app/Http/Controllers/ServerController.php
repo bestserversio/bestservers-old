@@ -192,7 +192,29 @@ class ServerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $meta = gen_meta();
+
+        // Attempt to retrieve server.
+        $server = Server::find((int) $id);
+
+        if (!$server) {
+            return Inertia::render('Error/ResourceNotFound', [
+                'meta' => $meta
+            ]);
+        }
+
+        // Adjust meta data.
+        $meta['title'] = $server->name . ' - Best Servers';
+
+        // To Do: Trim description to 64 - 128 characters and remove any Markdown syntax.
+        $meta['description'] = $server->description;
+
+        // To Do: Set meta tag image if the server has any.
+
+        return Inertia::render('Servers/View', [
+            'meta' => $meta,
+            'server' => $server
+        ]);
     }
 
     /**
