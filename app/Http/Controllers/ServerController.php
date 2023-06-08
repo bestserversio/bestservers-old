@@ -20,6 +20,14 @@ class ServerController extends Controller
      */
     public function index(Request $request)
     {
+
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(Request $request)
+    {
         $meta = gen_meta();
 
         // See if we have existing values.
@@ -69,24 +77,6 @@ class ServerController extends Controller
             'csrf' => $csrf,
             'errors' => $errors,
             'success' => $success,
-            'platforms' => $platforms,
-            'categories' => $categories
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $meta = gen_meta();
-        
-        // Platforms & Categories
-        $platforms = [];
-        $categories = [];
-
-        return Inertia::render('Servers/New', [
-            'meta' => $meta,
             'platforms' => $platforms,
             'categories' => $categories
         ]);
